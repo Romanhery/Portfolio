@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inatlus Namor— Portfolio</title>
+  <!-- Meta for SEO -->
+  <meta name="description" content="inatlus-namor — Professional & Creative Web Designer. Projects, contact, and portfolio showcasing modern, animated, mobile-first web UI." />
+  <meta name="theme-color" content="#7A3EFF" />
+  <link rel="icon" type="image/x-icon" href="Logo.png">
+
+  <style>
+    /* =====================================================
+       THEME TOKENS — Magical Purple + Teal Accent
+       ===================================================== */
+    :root {
+      /* Background layers */
+      --bg-0: #0A0612;     /* page base */
+      --bg-1: #0F0B1E;     /* card backdrop */
+      --bg-2: #15102A;     /* elevated surface */
+
+      /* Glass + borders */
+      --glass: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.18);
+      --stroke-soft: rgba(255,255,255,.10);
+
+      /* Brand colors */
+      --primary: #7A3EFF;   /* glow purple */
+      --primary-2:#A977FF;  /* lighter purple */
+      --accent:  #2EE6D6;   /* teal accent */
+      --pink:    #FF70D1;   /* magenta highlight */
+
+      /* Text */
+      --text: #F3F5F7;
+      --muted:#B9BCCD;
+
+      /* Layout */
+      --radius: 18px;
+      --radius-lg: 22px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --blur: blur(12px);
+
+      /* Motion */
+      --ease: cubic-bezier(.22,1,.36,1);
+      --ease-out: cubic-bezier(.16,1,.3,1);
+      --speed-1: 140ms;
+      --speed-2: 260ms;
+      --speed-3: 500ms;
+
+      /* Container widths */
+      --container: 1100px;
+      --container-wide: 1300px;
+    }
+
+    /* =====================================================
+       CSS RESET & BASE
+       ===================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, #2a1555 0%, transparent 55%),
+        radial-gradient(1000px 700px at 120% 20%, #24103f 0%, transparent 60%),
+        var(--bg-0);
+      min-height: 100dvh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    /* Utility containers */
+    .container { width: min(var(--container), 92%); margin-inline: auto; }
+    .container--wide { width: min(var(--container-wide), 92%); margin-inline: auto; }
+
+    /* Typographic scale */
+    h1, h2, h3, h4 { margin: 0 0 .4rem; line-height: 1.15; }
+    h1 { font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight: 800; letter-spacing: .2px; }
+    h2 { font-size: clamp(1.3rem, 3vw, 2rem); font-weight: 700; }
+    h3 { font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 650; }
+    p { color: var(--muted); margin: 0 0 1rem; }
+
+    /* Glass card base */
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* =====================================================
+       NAVIGATION — sticky, mobile-first
+       ===================================================== */
+    .nav { position: sticky; top: 0; z-index: 50; }
+    .nav__wrap {
+      background: linear-gradient(180deg, rgba(10,6,18,.78), rgba(10,6,18,.38));
+      backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav__row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; gap: 10px;
+    }
+    .brand {
+      font-weight: 850; letter-spacing: .6px;
+      padding: 8px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--stroke-soft);
+    }
+    .nav__links { display: none; gap: 10px; }
+    .nav__links a { padding: 8px 12px; border-radius: 10px; transition: background var(--speed-2) var(--ease); }
+    .nav__links a:hover { background: rgba(255,255,255,.08); }
+
+    /* Hamburger */
+    .hamburger { background: transparent; border: 1px solid var(--stroke-soft); color: var(--text); border-radius: 10px; padding: 8px 10px; }
+    .mobile-menu { display: none; flex-direction: column; gap: 8px; padding: 10px 0 14px; }
+    .mobile-menu a { padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid var(--stroke-soft); }
+
+    /* Desktop nav */
+    @media (min-width: 820px) {
+      .hamburger { display: none; }
+      .nav__links { display: flex; }
+      .mobile-menu { display: none !important; }
+    }
+
+    /* Active link indicator */
+    .nav a[aria-current="true"] { background: rgba(122,62,255,.18); border: 1px solid rgba(122,62,255,.35); }
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+    .hero { padding: 56px 0 28px; }
+    .hero__grid { display: grid; gap: 18px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 999px; font-size: .875rem; color: #e9defe;
+      background: linear-gradient(90deg, rgba(122,62,255,.25), rgba(46,230,214,.20));
+      border: 1px solid rgba(122,62,255,.35);
+    }
+    .hero__card { padding: 18px; }
+    .hero__cta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px; border-radius: 12px; border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(122,62,255,.25), rgba(122,62,255,.15));
+      color: var(--text); font-weight: 700; letter-spacing: .2px;
+      transition: transform var(--speed-2) var(--ease), filter var(--speed-2) var(--ease), background var(--speed-2) var(--ease);
+      will-change: transform, filter;
+    }
+    .btn:hover { transform: translateY(-2px); filter: drop-shadow(0 8px 20px rgba(122,62,255,.25)); }
+    .btn--ghost { background: rgba(255,255,255,.04); }
+
+    @media (min-width: 820px) {
+      .hero { padding: 80px 0 40px; }
+      .hero__grid { grid-template-columns: 1.07fr .93fr; align-items: center; }
+      .hero__card { padding: 24px; }
+    }
+
+    /* =====================================================
+       SKILLS STRIP — scrollable on mobile
+       ===================================================== */
+    .skills { margin-top: 18px; overflow: auto hidden; }
+    .chip-row { display: inline-flex; gap: 10px; padding-bottom: 4px; }
+    .chip {
+      padding: 10px 12px; border-radius: 999px; font-weight: 600; font-size: .9rem;
+      background: rgba(255,255,255,.06); border: 1px solid var(--stroke-soft);
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       PROJECTS GRID
+       ===================================================== */
+    section { padding: 56px 0; }
+    .section__head { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+    .section__sub { color: var(--muted); font-size: .95rem; }
+
+    .projects { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 560px) { .projects { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) { .projects { grid-template-columns: repeat(3, 1fr); } }
+
+    .project { position: relative; overflow: hidden; border-radius: var(--radius-lg); background: var(--bg-2); border: 1px solid var(--stroke); transition: transform var(--speed-2) var(--ease), box-shadow var(--speed-2) var(--ease); }
+    .project:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+
+    .project__media { aspect-ratio: 16 / 9; background: #1d152e; position: relative; overflow: hidden; }
+    .project__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.05); transform: scale(1.02); transition: transform var(--speed-3) var(--ease); }
+    .project:hover .project__media img { transform: scale(1.06); }
+
+    .project__body { padding: 14px 14px 16px; display: grid; gap: 10px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-size: .78rem; padding: 6px 10px; border-radius: 999px; background: rgba(122,62,255,.16); border: 1px solid rgba(122,62,255,.35); color: #e9defe; }
+
+    .project__link { position: absolute; inset: 0; }
+
+    /* =====================================================
+       CONTACT — form + socials
+       ===================================================== */
+    .contact__grid { display: grid; gap: 16px;}
+    @media (min-width: 860px) { .contact__grid { grid-template-columns: 1.1fr .9fr; align-items: start; } }
+
+    .form { display: grid; gap: 12px; padding: 10px;}
+    .field { display: grid; gap: 6px; }
+    label { font-size: .92rem; color: var(--muted); }
+    input, textarea {
+      padding: 12px 14px; border-radius: 14px; border: 1px solid var(--stroke);
+      background: var(--bg-1); color: var(--text);
+      transition: border-color var(--speed-2) var(--ease), box-shadow var(--speed-2) var(--ease);
+    }
+    input:focus, textarea:focus { border-color: var(--primary-2); box-shadow: 0 0 0 3px rgba(122,62,255,.20); }
+    .btn--accent { background: linear-gradient(180deg, rgba(46,230,214,.28), rgba(46,230,214,.18)); border-color: rgba(46,230,214,.45); }
+
+    .socials { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .social {
+      display: grid; place-items: center; aspect-ratio: 1; border-radius: 16px; border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.05); transition: transform var(--speed-2) var(--ease), background var(--speed-2) var(--ease);
+    }
+    .social:hover { transform: translateY(-3px); background: rgba(255,255,255,.10); }
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+    footer { padding: 36px 0 60px; color: var(--muted); text-align: center; }
+
+    /* =====================================================
+       SCROLL REVEAL ANIMATIONS (reduced-motion aware)
+       ===================================================== */
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+      .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Decorative soft glow under sections */
+    .glow { position: relative; }
+    .glow::after {
+      content: ""; position: absolute; inset: auto 10% -30px 10%; height: 40px;
+      background: radial-gradient(40% 100% at 50% 0%, rgba(122,62,255,.35), transparent 70%);
+      filter: blur(12px); pointer-events: none;
+    }
+
+    /* Tiny helpers */
+    .mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}
+    .mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
+    .grid-2{display:grid;gap:12px}@media(min-width:680px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <!-- =================================================== -->
+  <!-- NAVIGATION                                           -->
+  <!-- =================================================== -->
+  <header class="nav">
+    <div class="nav__wrap">
+      <div class="container nav__row">
+        <a class="brand" href="#home" aria-label="inatlus-namor — Home">Inatlus Namor</a>
+        <nav class="nav__links" aria-label="Primary">
+          <a href="#projects" data-link>Projects</a>
+          <a href="#contact" data-link>Contact</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">☰</button>
+      </div>
+      <div id="mobileMenu" class="container mobile-menu" role="dialog" aria-modal="false">
+        <a href="#projects" data-link>Projects</a>
+        <a href="#contact" data-link>Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================================================== -->
+  <!-- HERO                                                -->
+  <!-- =================================================== -->
+  <main id="home">
+    <section class="hero container reveal glow">
+      <div class="hero__grid">
+        <div class="hero__card card">
+          <span class="badge mb-3">Professional ✦ Creative ✦ Mobile-first</span>
+          <h1>Turning Ideas into Digital Magic</h1>
+          
+          <div class="hero__cta mt-4">
+            <a class="btn" href="#projects">View Projects</a>
+            <a class="btn btn--ghost" href="#contact">Contact Me</a>
+          </div>
+          <div class="skills mt-4" aria-label="Skills">
+            <div class="chip-row">
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Responsive UI</span>
+              <span class="chip">Animations</span>
+              <span class="chip">Accessibility</span>
+              <span class="chip">Webflow-inspired</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:18px">
+          <div class="grid-2">
+            <div class="card" style="padding:14px;">
+              <h3>2 Sites</h3>
+              <p class="mt-2">Across personal projects and client work, with consistent design systems.</p>
+            </div>
+            <div class="card" style="padding:14px;">
+              <h3>1+ Year</h3>
+              <p class="mt-2">Hands-on building modern, maintainable front‑ends.</p>
+            </div>
+            <div class="card" style="padding:14px;">
+              <h3>Web Designer</h3>
+              <p class="mt-2">Clean layouts, thoughtful micro‑interactions, and strong typography.</p>
+            </div>
+            <div class="card" style="padding:14px;">
+              <h3>Available</h3>
+              <p class="mt-2">Open to collaborations, freelance, and portfolio reviews.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================= -->
+    <!-- PROJECTS                                          -->
+    <!-- ================================================= -->
+    <section id="projects" class="container reveal glow" aria-labelledby="projects-title">
+      <div class="section__head">
+        <div>
+          <h2 id="projects-title">Featured Projects</h2>
+          <p class="section__sub">Image + title + tags with subtle hover motion and keyboard focus.</p>
+        </div>
+        <div>
+          <a class="btn btn--ghost" href="#contact">Work with me</a>
+        </div>
+      </div>
+
+      <div class="projects" role="list">
+        <!-- Project card 1 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 1"></a>
+          <div class="project__media">
+            <a href="https://romanweb-one.vercel.app/"><img loading="lazy" alt="Gradient UI dashboard preview" src="Screenshot 2025-08-14 at 2.00.08 PM.png"/></a>
+          </div>
+          <div class="project__body">
+            <h3>Landing Page</h3>
+            <p class="section__sub">A landing page for a software showcase.</p>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JS</span>
+              <span class="tag">3-D</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project card 2 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 2"></a>
+          <div class="project__media">
+            <a href="#" target="_parent"><img loading="lazy" alt="Portfolio landing page with cards" src="Screenshot 2025-08-14 at 2.03.30 PM.png"/></a>
+          </div>
+          <div class="project__body">
+            <h3>Personal Portfolio</h3>
+            <p class="section__sub">Mobile-first layout using CSS Grid and fluid type scale.</p>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JS</span>
+              <span class="tag">Glassmorphism</span>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- Project card 3 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 3"></a>
+          <div class="project__media">
+            <img loading="lazy" alt="Ecommerce cards over dark background" src="magical-mystical-landscape-wallpaper-purple-tones.jpg"/>
+          </div>
+          <div class="project__body">
+            <h3>Coming Soon!</h3>
+            <p class="section__sub">Card grid with hover overlays and tag filters.</p>
+            <div class="tags">
+            </div>
+          </div>
+        </article>
+
+        <!-- Project card 4 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 4"></a>
+          <div class="project__media">
+            <img loading="lazy" alt="Dark themed blog list" src="magical-mystical-landscape-wallpaper-purple-tones.jpg"/>
+          </div>
+          <div class="project__body">
+            <h3>Coming Soon!</h3>
+            <p class="section__sub">Accessible list with skip links and focus rings.</p>
+            <div class="tags">
+            </div>
+          </div>
+        </article>
+
+        <!-- Project card 5 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 5"></a>
+          <div class="project__media">
+            <img loading="lazy" alt="Landing page hero" src="magical-mystical-landscape-wallpaper-purple-tones.jpg"/>
+          </div>
+          <div class="project__body">
+            <h3>Coming Soon!</h3>
+            <p class="section__sub">Animated hero with badge and CTA buttons.</p>
+            <div class="tags">
+            </div>
+          </div>
+        </article>
+
+        <!-- Project card 6 -->
+        <article class="project" role="listitem">
+          <a class="project__link" href="#" aria-label="Open Project 6"></a>
+          <div class="project__media">
+            <img loading="lazy" alt="Teal and purple UI components" src="magical-mystical-landscape-wallpaper-purple-tones.jpg"/>
+          </div>
+          <div class="project__body">
+            <h3>Coming Soon!</h3>
+            <p class="section__sub">Component library matching this portfolio’s visual language.</p>
+            <div class="tags">
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================================================= -->
+    <!-- CONTACT                                           -->
+    <!-- ================================================= -->
+    <section id="contact" class="container reveal glow" aria-labelledby="contact-title">
+      <div class="section__head">
+        <div>
+          <h2 id="contact-title">Contact</h2>
+          <p class="section__sub">Send a message and find me around the web.</p>
+        </div>
+      </div>
+
+      <div class="contact__grid">
+        <form class="form card" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Tell me about your project" required></textarea>
+          </div>
+          <button class="btn btn--accent" type="submit">Send Message</button>
+          <p id="formNote" class="section__sub" role="status" aria-live="polite"></p>
+        </form>
+
+        <aside class="card" style="padding:16px">
+          <h3>Socials</h3>
+          <p class="mt-2">Follow or message me on these platforms.</p>
+          <div class="socials mt-3" aria-label="Social links">
+            <a class="social" href="https://github.com/Romanhery" aria-label="GitHub" title="GitHub">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.13-1.52-1.13-1.52-.92-.64.07-.63.07-.63 1.02.07 1.55 1.07 1.55 1.07.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.08 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .85-.28 2.8 1.05a9.23 9.23 0 0 1 5.1 0c1.95-1.33 2.8-1.05 2.8-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.95-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .27.18.59.69.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
+            </a>
+            <a class="social" href="https://www.linkedin.com/in/inatlus-namor-95a5b42ba/" aria-label="LinkedIn" title="LinkedIn">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.94 8.5H4V20h2.94V8.5ZM5.47 7.09a1.71 1.71 0 1 0 0-3.42 1.71 1.71 0 0 0 0 3.42Zm4.13 12.91H12.5v-5.96c0-1.49.55-2.37 1.7-2.37 1.07 0 1.62.72 1.62 2.37V20H19v-6.77c0-2.98-1.53-4.37-3.58-4.37-1.66 0-2.4.91-2.81 1.54h-.05V8.5H9.6c.04.86 0 11.5 0 11.5Z" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p>© <span id="year"></span>Inatlus Namor. Built with semantic HTML, CSS Grid/Flex, and a sprinkle of JS.</p>
+  </footer>
+
+  <!-- =================================================== -->
+  <!-- SCRIPTS — smooth scroll, active link, reveals       -->
+  <!-- =================================================== -->
+  <script>
+    // Helper: clamp between min and max
+    const clamp = (n, min, max) => Math.min(Math.max(n, min), max);
+
+    // Current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      const open = hamburger.getAttribute('aria-expanded') === 'true';
+      hamburger.setAttribute('aria-expanded', String(!open));
+      mobileMenu.style.display = open ? 'none' : 'flex';
+      mobileMenu.setAttribute('aria-modal', String(!open));
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('[data-link]').forEach(a => a.addEventListener('click', () => {
+      if (window.innerWidth < 820) {
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.style.display = 'none';
+        mobileMenu.setAttribute('aria-modal', 'false');
+      }
+    }));
+
+    // Smooth scrolling with offset for sticky header (improves default behavior)
+    function smoothScrollTo(hash) {
+      const el = document.querySelector(hash);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset;
+      const header = document.querySelector('.nav__wrap');
+      const offset = header ? header.offsetHeight + 10 : 0;
+      window.scrollTo({ top: clamp(y - offset, 0, document.body.scrollHeight), behavior: 'smooth' });
+    }
+
+    // Enhance all in-page anchors
+    document.querySelectorAll('a[href]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href && href.startsWith('#') && href.length > 1) {
+          e.preventDefault();
+          history.pushState(null, '', href);
+          smoothScrollTo(href);
+        }
+      });
+    });
+
+    // Active link highlighting on scroll
+    const sections = ['home','projects','contact'].map(id => document.getElementById(id));
+    const setActive = (id) => {
+      document.querySelectorAll('.nav a').forEach(a => a.setAttribute('aria-current','false'));
+      document.querySelectorAll(`.nav a[href="#${id}"]`).forEach(a => a.setAttribute('aria-current','true'));
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+
+    sections.forEach(s => s && observer.observe(s));
+
+    // Reveal animations (Intersection Observer)
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // Parallax background on scroll (subtle)
+    const parallax = () => {
+      const y = window.scrollY; // value in px
+      document.body.style.backgroundPosition = `0px ${Math.round(y * -0.02)}px, right ${Math.round(y * -0.04)}px, 0 0`;
+    };
+    window.addEventListener('scroll', () => {
+      if (matchMedia('(prefers-reduced-motion: no-preference)').matches) parallax();
+    }, { passive: true });
+
+    // Simple client-side form validation (no network)
+    const form = document.getElementById('contactForm');
+    const formNote = document.getElementById('formNote');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get('name') || '').toString().trim();
+      const email = (data.get('email') || '').toString().trim();
+      const message = (data.get('message') || '').toString().trim();
+      if (!name || !email || !message) {
+        formNote.textContent = 'Please fill out all fields.';
+        formNote.style.color = '#ff9fbf';
+        return;
+      }
+      const emailOK = email.includes('@') && email.includes('.');
+      if (!emailOK) {
+        formNote.textContent = 'Please enter a valid email address.';
+        formNote.style.color = '#ff9fbf';
+        return;
+      }
+      // Success feedback
+      formNote.textContent = 'Thanks! Your message has been prepared locally (no backend connected).';
+      formNote.style.color = '#9fffe0';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
