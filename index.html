@@ -247,6 +247,35 @@
     .mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}
     .mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}
     .grid-2{display:grid;gap:12px}@media(min-width:680px){.grid-2{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width: 1600px) {
+      .container { width: min(1400px, 90%); }
+      .container--wide { width: min(1600px, 92%); }
+    }
+
+    /* Tiny phones */
+    @media (max-width: 360px) {
+      .hero__cta { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .brand { font-size: .9rem; padding: 6px 8px; }
+      .hamburger { padding: 6px 8px; }
+    }
+
+    /* Skills row scrollbar hide */
+    .skills::-webkit-scrollbar { display: none; }
+    .skills { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Tablets middle state for projects grid */
+    @media (min-width: 720px) and (max-width: 900px) {
+      .projects { grid-template-columns: 1fr; }
+    }
+
+    /* Small phones social grid */
+    @media (max-width: 480px) {
+      .socials { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Body font scaling */
+    body { font-size: clamp(15px, 1.05vw, 18px); }
   </style>
 </head>
 <body>
